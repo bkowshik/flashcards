@@ -1,10 +1,11 @@
-// Hash-based router. Three views + an edit form that reuses the add view.
+// Hash-based router. Four views + an edit form that reuses the add view.
 //
 // Routes:
 //   #/add           → { name: 'add' }
 //   #/edit/:id      → { name: 'edit', id }
 //   #/browse        → { name: 'browse' }
 //   #/quiz          → { name: 'quiz' }
+//   #/about         → { name: 'about' }
 //
 // Anything unrecognised (including empty hash) resolves to #/add.
 
@@ -14,7 +15,8 @@ export type Route =
   | { name: 'add' }
   | { name: 'edit'; id: string }
   | { name: 'browse' }
-  | { name: 'quiz' };
+  | { name: 'quiz' }
+  | { name: 'about' };
 
 function parse(hash: string): Route {
   // Strip leading '#' then leading '/' so '#/edit/abc' → 'edit/abc'.
@@ -23,6 +25,7 @@ function parse(hash: string): Route {
 
   if (head === 'browse') return { name: 'browse' };
   if (head === 'quiz') return { name: 'quiz' };
+  if (head === 'about') return { name: 'about' };
   if (head === 'edit' && rest[0]) return { name: 'edit', id: rest[0] };
   return { name: 'add' };
 }
@@ -47,5 +50,6 @@ function serialize(r: Route): string {
     case 'edit': return `#/edit/${r.id}`;
     case 'browse': return '#/browse';
     case 'quiz': return '#/quiz';
+    case 'about': return '#/about';
   }
 }

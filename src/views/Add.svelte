@@ -136,29 +136,31 @@
           bind:this={questionEl}
           bind:value={question}
           rows="3"
-          placeholder="Write the prompt…"
+          placeholder="e.g. What is a flashcard?"
           spellcheck="true"
         ></textarea>
       </label>
 
       <label>
-        <span class="field-label">Answer</span>
+        <span class="field-label">
+          Answer
+          <span class="field-hint">· Markdown supported</span>
+        </span>
         <textarea
           bind:value={answer}
           rows="10"
-          placeholder="…and the answer (markdown supported)"
+          placeholder="e.g. A note with a question on one side and the answer on the other."
           spellcheck="true"
         ></textarea>
       </label>
 
       <div class="actions">
-        <button type="submit" disabled={!canSave || saving}>
+        <button type="submit" class="primary" disabled={!canSave || saving}>
           {isEdit ? 'Save' : 'Add'}
           <kbd>⌘↵</kbd>
         </button>
         <button
           type="button"
-          class="secondary"
           onclick={clearOrCancel}
           disabled={!isEdit && !question && !answer}
         >
@@ -200,6 +202,13 @@
     color: var(--fg-muted);
     font-weight: 500;
   }
+  .field-hint {
+    font-weight: 400;
+    /* Slightly lighter than the label so it reads as supplementary, not part
+     * of the field's name. */
+    opacity: 0.75;
+    margin-left: 0.15rem;
+  }
   textarea {
     font: inherit;
     width: 100%;
@@ -220,41 +229,6 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
-  }
-  button {
-    font: inherit;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    border: 1px solid var(--accent);
-    background: var(--accent);
-    color: var(--accent-fg);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  button.secondary {
-    background: var(--bg-subtle);
-    color: var(--fg);
-    border-color: var(--border);
-  }
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  button:not(:disabled):hover {
-    filter: brightness(1.05);
-  }
-  kbd {
-    font-family: var(--font-mono);
-    font-size: 0.75em;
-    opacity: 0.85;
-    padding: 0.05rem 0.3rem;
-    border-radius: 0.25rem;
-    background: rgba(0, 0, 0, 0.15);
-  }
-  button.secondary kbd {
-    background: rgba(0, 0, 0, 0.08);
   }
   .status {
     margin-top: 1rem;

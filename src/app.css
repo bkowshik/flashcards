@@ -1,44 +1,51 @@
-/* Tokens. ~10 vars cover the whole UI. Dark mode swaps these via [data-theme="dark"]. */
+/* Tokens. ~10 vars cover the whole UI. Dark mode swaps these via [data-theme="dark"].
+ *
+ * Palette: warm paper. Cream-tinted light bg / espresso-tinted dark bg, with an
+ * amber accent. Aims for an editorial / Moleskine feel rather than generic-SaaS
+ * cool-gray on indigo.
+ */
 
 :root {
-  --bg: #ffffff;
-  --bg-subtle: #f3f4f6;
-  --fg: #111827;
-  --fg-muted: #6b7280;
-  --border: #e5e7eb;
-  --accent: #6366f1;
+  --bg: #faf8f4;            /* warm cream */
+  --bg-subtle: #f1ede5;     /* deeper warm surface */
+  --fg: #1c1917;            /* near-black, warm slate */
+  --fg-muted: #78716c;      /* stone-500 */
+  --border: #e7e1d4;        /* warm border */
+  --accent: #d97706;        /* amber-600 */
   --accent-fg: #ffffff;
-  --danger: #dc2626;
+  --danger: #b91c1c;        /* warmer red */
 
   --font-sans:
-    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+    'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono:
+    'Geist Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas,
+    'Liberation Mono', monospace;
 }
 
 /* Auto dark when the user prefers it and no explicit theme is set on <html>. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #0b0f17;
-    --bg-subtle: #161b24;
-    --fg: #e5e7eb;
-    --fg-muted: #9ca3af;
-    --border: #23293a;
-    --accent: #818cf8;
-    --accent-fg: #0b0f17;
+    --bg: #1a1714;          /* warm espresso */
+    --bg-subtle: #28231e;   /* warmer surface */
+    --fg: #f5f5f4;          /* warm white, stone-100 */
+    --fg-muted: #a8a29e;    /* stone-400 */
+    --border: #3a342d;      /* warm dark border */
+    --accent: #fbbf24;      /* amber-400, brighter for dark */
+    --accent-fg: #1a1714;
     --danger: #f87171;
   }
 }
 
 /* Explicit dark override regardless of system preference. */
 :root[data-theme='dark'] {
-  --bg: #0b0f17;
-  --bg-subtle: #161b24;
-  --fg: #e5e7eb;
-  --fg-muted: #9ca3af;
-  --border: #23293a;
-  --accent: #818cf8;
-  --accent-fg: #0b0f17;
+  --bg: #1a1714;
+  --bg-subtle: #28231e;
+  --fg: #f5f5f4;
+  --fg-muted: #a8a29e;
+  --border: #3a342d;
+  --accent: #fbbf24;
+  --accent-fg: #1a1714;
   --danger: #f87171;
 }
 
@@ -75,6 +82,61 @@ a {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------------------
+ * Shared button system. Default = neutral (subtle bg, fg text).
+ * Opt-in variants: .primary (accent), .danger (red).
+ * Lives in app.css so every view's <button> picks up the same size,
+ * padding, and treatment — previously Browse used a smaller chip size
+ * which looked off next to Add/Quiz's full-size buttons.
+ * -------------------------------------------------------------------------- */
+
+button {
+  font: inherit;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--fg);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.25;
+}
+button.primary {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+button.danger {
+  background: var(--danger);
+  color: #ffffff;
+  border-color: var(--danger);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button:not(:disabled):hover {
+  filter: brightness(1.05);
+}
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Inline keyboard hints inside buttons — currentColor mix keeps the kbd
+ * legible on both neutral and accent backgrounds without two branches. */
+button kbd {
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  opacity: 0.9;
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, currentColor 14%, transparent);
 }
 
 /* ----------------------------------------------------------------------------

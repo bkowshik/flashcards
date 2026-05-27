@@ -144,7 +144,6 @@
     {#if !loading}
       <div class="bar-actions">
         <button
-          class="bar-btn"
           onclick={onExport}
           disabled={cards.length === 0 || exporting}
           title={cards.length === 0 ? 'Nothing to export yet' : 'Download all cards as JSON'}
@@ -152,7 +151,6 @@
           {exporting ? 'Exporting…' : 'Export'}
         </button>
         <button
-          class="bar-btn"
           onclick={onImportClick}
           disabled={importing}
           title="Merge cards from a JSON file"
@@ -180,6 +178,7 @@
 
   {#if !loading && cards.length === 0 && !error}
     <div class="empty">
+      <div class="empty-icon" aria-hidden="true">🃏</div>
       <p>No cards yet.</p>
       <a class="cta" href="#/add">Add your first card</a>
     </div>
@@ -206,9 +205,9 @@
               >
                 {deletingId === card.id ? 'Deleting…' : 'Yes'}
               </button>
-              <button class="secondary" onclick={cancelDelete}>Cancel</button>
+              <button onclick={cancelDelete}>Cancel</button>
             {:else}
-              <button class="secondary" onclick={() => askDelete(card.id)}>
+              <button onclick={() => askDelete(card.id)}>
                 Delete
               </button>
             {/if}
@@ -237,28 +236,7 @@
   }
   .bar-actions {
     display: flex;
-    gap: 0.375rem;
-  }
-  .bar-btn {
-    font: inherit;
-    font-size: 0.875rem;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.375rem;
-    border: 1px solid var(--border);
-    background: var(--bg-subtle);
-    color: var(--fg);
-    cursor: pointer;
-  }
-  .bar-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .bar-btn:not(:disabled):hover {
-    filter: brightness(1.05);
-  }
-  .bar-btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
+    gap: 0.5rem;
   }
   .status {
     margin: 0 0 1rem;
@@ -273,6 +251,12 @@
     padding: 3rem 1rem;
     text-align: center;
     color: var(--fg-muted);
+  }
+  .empty-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    opacity: 0.85;
   }
   .empty p {
     margin: 0 0 1rem;
@@ -337,35 +321,6 @@
     color: var(--danger);
     font-size: 0.875rem;
     margin-right: 0.25rem;
-  }
-  button {
-    font: inherit;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.375rem;
-    border: 1px solid var(--border);
-    background: var(--bg-subtle);
-    color: var(--fg);
-    cursor: pointer;
-    font-size: 0.875rem;
-  }
-  button.secondary {
-    background: var(--bg-subtle);
-  }
-  button.danger {
-    background: var(--danger);
-    color: white;
-    border-color: var(--danger);
-  }
-  button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-  button:not(:disabled):hover {
-    filter: brightness(1.05);
-  }
-  button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
   }
   .error {
     margin: 0 0 1rem;

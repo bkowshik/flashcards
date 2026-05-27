@@ -1,9 +1,9 @@
 <script lang="ts">
   import Header from './components/Header.svelte';
-  import ShortcutsOverlay from './components/ShortcutsOverlay.svelte';
   import Add from './views/Add.svelte';
   import Browse from './views/Browse.svelte';
   import Quiz from './views/Quiz.svelte';
+  import About from './views/About.svelte';
   import { route } from './lib/router';
   import { handleGlobalKey } from './lib/shortcuts';
 </script>
@@ -21,10 +21,10 @@
     <Browse />
   {:else if $route.name === 'quiz'}
     <Quiz />
+  {:else if $route.name === 'about'}
+    <About />
   {/if}
 </main>
-
-<ShortcutsOverlay />
 
 <style>
   main {

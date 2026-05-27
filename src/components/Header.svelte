@@ -1,6 +1,5 @@
 <script lang="ts">
   import { route, go, type Route } from '../lib/router';
-  import SettingsPanel from './SettingsPanel.svelte';
 
   type NavItem = { label: string; route: Route; match: Route['name'][] };
 
@@ -10,12 +9,14 @@
     { label: 'Add', route: { name: 'add' }, match: ['add', 'edit'] },
     { label: 'Browse', route: { name: 'browse' }, match: ['browse'] },
     { label: 'Quiz', route: { name: 'quiz' }, match: ['quiz'] },
+    { label: 'About', route: { name: 'about' }, match: ['about'] },
   ];
 </script>
 
 <header>
   <a class="brand" href="#/add" onclick={(e) => { e.preventDefault(); go({ name: 'add' }); }}>
-    Flashcards
+    <span class="brand-emoji" aria-hidden="true">📇</span>
+    flashcards
   </a>
   <nav>
     {#each items as item (item.label)}
@@ -27,7 +28,6 @@
         {item.label}
       </button>
     {/each}
-    <SettingsPanel />
   </nav>
 </header>
 
@@ -44,7 +44,15 @@
     font-weight: 600;
     color: var(--fg);
     text-decoration: none;
-    font-size: 1.05rem;
+    font-size: 1.125rem;
+    letter-spacing: -0.005em;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .brand-emoji {
+    margin-right: 0.4rem;
+    /* Slightly smaller than the wordmark so the emoji doesn't shout. */
+    font-size: 0.95em;
   }
   nav {
     display: flex;

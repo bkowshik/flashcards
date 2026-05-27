@@ -118,6 +118,7 @@
     <p class="error" role="alert">{error}</p>
   {:else if cards.length === 0}
     <div class="empty">
+      <div class="empty-icon" aria-hidden="true">🎯</div>
       <p>No cards yet.</p>
       <a class="cta" href="#/add">Add a card to start quizzing</a>
     </div>
@@ -130,9 +131,11 @@
     -->
     <div class="card-stack" class:flipped role="presentation">
       <div class="face front markdown" aria-hidden={flipped}>
+        <span class="face-label">Question</span>
         {@html renderMarkdown(currentCard.question)}
       </div>
       <div class="face back markdown" aria-hidden={!flipped}>
+        <span class="face-label">Answer</span>
         {@html renderMarkdown(currentCard.answer)}
       </div>
     </div>
@@ -146,13 +149,13 @@
     <div class="meta">Card {position + 1} of {queue.length}</div>
 
     <div class="nav">
-      <button onclick={prev} disabled={atStart} class="secondary">
+      <button onclick={prev} disabled={atStart}>
         <kbd>P</kbd> ← Prev
       </button>
-      <button onclick={editCurrent} class="secondary">
+      <button onclick={editCurrent}>
         Edit <kbd>E</kbd>
       </button>
-      <button onclick={next} class="secondary">
+      <button onclick={next}>
         Next → <kbd>N</kbd>
       </button>
     </div>
@@ -183,6 +186,12 @@
     text-align: center;
     color: var(--fg-muted);
   }
+  .empty-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    opacity: 0.85;
+  }
   .empty p {
     margin: 0 0 1rem;
   }
@@ -205,8 +214,9 @@
     min-height: 10rem;
   }
   .face {
+    position: relative;
     grid-area: card;
-    padding: 2rem;
+    padding: 2.5rem 2rem 2rem;
     background: var(--bg-subtle);
     border: 1px solid var(--border);
     border-radius: 0.625rem;
@@ -218,11 +228,29 @@
     font-size: 1.0625rem;
     line-height: 1.55;
   }
+  /* Tiny uppercase label in the top-left corner makes Q vs A unambiguous
+   * at a glance — without it both faces look identical post-flip. */
+  .face-label {
+    position: absolute;
+    top: 0.75rem;
+    left: 1rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+  }
+  .face.back .face-label {
+    color: var(--accent);
+  }
   .face.front {
     transform: rotateY(0deg);
   }
   .face.back {
+    /* Subtle accent-tinted border + label so the reveal feels distinct from
+     * the prompt without making the answer card a different shape. */
     transform: rotateY(180deg);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
   }
   .card-stack.flipped .face.front {
     transform: rotateY(-180deg);
@@ -248,47 +276,5 @@
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-  }
-
-  button {
-    font: inherit;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  button.primary {
-    background: var(--accent);
-    color: var(--accent-fg);
-    border: 1px solid var(--accent);
-  }
-  button.secondary {
-    background: var(--bg-subtle);
-    color: var(--fg);
-    border: 1px solid var(--border);
-  }
-  button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  button:not(:disabled):hover {
-    filter: brightness(1.05);
-  }
-  button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
-  }
-  kbd {
-    font-family: var(--font-mono);
-    font-size: 0.72em;
-    opacity: 0.85;
-    padding: 0.05rem 0.3rem;
-    border-radius: 0.25rem;
-    background: rgba(0, 0, 0, 0.15);
-  }
-  button.secondary kbd {
-    background: rgba(0, 0, 0, 0.08);
   }
 </style>
