@@ -1,5 +1,5 @@
 // 8-char URL-safe ID via crypto.getRandomValues. No dependency, no modulo bias
-// (the 6-bit mask matches the 64-char alphabet exactly). See docs/plan.md §5.
+// (the 6-bit mask matches the 64-char alphabet exactly).
 
 const ALPHABET =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';

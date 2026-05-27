@@ -1,4 +1,4 @@
-// The single domain entity. See docs/plan.md §5.
+// The single domain entity.
 
 export type Card = {
   id: string;        // 8-char URL-safe nanoid, see ./id.ts

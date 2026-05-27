@@ -3,6 +3,7 @@
   import { shortcutGroups } from '../lib/keyboard-help';
 
   const REPO_URL = 'https://github.com/bkowshik/flashcards';
+  const AUTHOR_URL = 'https://bkowshik.in/';
 
   let selected = $state<Theme>($theme);
 
@@ -103,7 +104,7 @@
 
   <footer class="credit">
     Built with <span aria-label="brain" role="img">🧠</span> by
-    <a href={REPO_URL} target="_blank" rel="noopener noreferrer">Bhargav Kowshik</a>
+    <a href={AUTHOR_URL} target="_blank" rel="noopener noreferrer">Bhargav Kowshik</a>
     <span class="sep">·</span>
     <a
       href="https://github.com/bkowshik/flashcards/blob/main/LICENSE"

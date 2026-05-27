@@ -2,10 +2,8 @@
 
 A fast, fully client-side flashcard tool. No login, no server, no analytics. Cards live in your browser; export the whole library to JSON any time.
 
-**Live:** <https://flashcards-bkowshik.pages.dev>
-**Source:** <https://github.com/bkowshik/flashcards>
-
-See [docs/plan.md](docs/plan.md) for the design doc and build phases.
+- **Live:** <https://flashcards-bkowshik.pages.dev>
+- **Source:** <https://github.com/bkowshik/flashcards>
 
 ## Quick start
 
@@ -29,9 +27,14 @@ Opens at `http://localhost:5173` with hot module reload.
 
 ## Stack
 
-[Vite](https://vite.dev) · [Svelte 5](https://svelte.dev) · TypeScript · IndexedDB (via [`idb-keyval`](https://github.com/jakearchibald/idb-keyval)) · [`marked`](https://marked.js.org) + [`DOMPurify`](https://github.com/cure53/DOMPurify) for markdown · [Geist Sans + Geist Mono](https://vercel.com/font) self-hosted via [Fontsource](https://fontsource.org).
+- **[Vite](https://vite.dev)** — build tool and dev server with HMR.
+- **[Svelte 5](https://svelte.dev)** — UI framework with the runes API.
+- **TypeScript** — type safety across the app.
+- **[`idb-keyval`](https://github.com/jakearchibald/idb-keyval)** — tiny IndexedDB wrapper for local card storage.
+- **[`marked`](https://marked.js.org) + [`DOMPurify`](https://github.com/cure53/DOMPurify)** — markdown rendering, sanitized.
+- **[Geist Sans + Geist Mono](https://vercel.com/font)** — self-hosted via [Fontsource](https://fontsource.org).
 
-Bundle: **~46 KB gzipped JS**, ~3.5 KB gzipped CSS, plus woff2 font subsets loaded on demand. Stays under the 50 KB JS target.
+Builds to **~46 KB gzipped JS** + ~3.5 KB CSS, under the 50 KB target.
 
 ## Project layout
 
@@ -62,42 +65,36 @@ src/
 
 ## Routes
 
-Hash-based, no server-side routing needed.
-
 - `#/add` — capture a new card (default)
-- `#/edit/:id` — edit an existing card (same component as Add)
+- `#/edit/:id` — edit an existing card
 - `#/browse` — list of all cards
 - `#/quiz` — flip through a shuffled queue
 - `#/about` — intro, theme picker, keyboard shortcuts, data location
 
 ## Keyboard
 
-Nav is Gmail-style chord shortcuts: `g a` (Add) · `g b` (Browse) · `g q` (Quiz). Quiz: `Space` to flip, `n`/`p` (or `→`/`←`) to navigate, `e` to edit the current card. Save in Add is `⌘/Ctrl + Enter`; `Esc` clears the form or cancels an edit.
+Nav is Gmail-style chord shortcuts: `g a` (Add) · `g b` (Browse) · `g q` (Quiz). Quiz: `Space` to flip, `n`/`p` (or `→`/`←`) to navigate, `e` to edit. Save in Add is `⌘/Ctrl + Enter`; `Esc` clears or cancels.
 
-The full list lives on the [About page](https://flashcards-bkowshik.pages.dev/#/about).
+Full list on the [About page](https://flashcards-bkowshik.pages.dev/#/about).
 
 ## Data
 
-Cards live in your browser's IndexedDB under the `flashcards` database. Nothing is sent anywhere — clearing your browser data clears your cards.
+Cards live in your browser's IndexedDB under the `flashcards` database. Nothing is sent anywhere.
 
-- **Export** (Browse page) downloads the whole library as JSON.
-- **Import** (Browse page) merges a JSON file back in.
-- To wipe everything manually: DevTools → Application → IndexedDB → `flashcards` → Delete database.
+- **Export** (Browse) — download the whole library as JSON.
+- **Import** (Browse) — merge a JSON file back in.
+- Wipe everything: DevTools → Application → IndexedDB → `flashcards` → Delete database.
 
 ## Deploy
 
-Hosted on [Cloudflare Pages](https://pages.cloudflare.com) with Git integration: every push to `main` rebuilds and ships to the live URL above. Build settings:
+Hosted on [Cloudflare Pages](https://pages.cloudflare.com) with Git integration — every push to `main` rebuilds and ships.
 
-| | |
+| Setting | Value |
 |---|---|
 | Build command | `npm run build` |
 | Build output | `dist/` |
 | Node version | `20` (via `NODE_VERSION` env var) |
 
-Self-hosted Geist Sans + Geist Mono ship via [Fontsource](https://fontsource.org) — woff2 files land in `dist/assets/` at build, so the app makes no third-party requests in production.
-
 ## License
 
-Released under the [MIT License](LICENSE). Copyright © 2026 Bhargav Kowshik.
-
-You're free to fork, modify, and use this for anything — see [LICENSE](LICENSE) for the full terms.
+[MIT](LICENSE) © 2026 Bhargav Kowshik.
