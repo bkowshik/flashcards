@@ -1,0 +1,141 @@
+/* Tokens. ~10 vars cover the whole UI. Dark mode swaps these via [data-theme="dark"]. */
+
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f3f4f6;
+  --fg: #111827;
+  --fg-muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #6366f1;
+  --accent-fg: #ffffff;
+  --danger: #dc2626;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+/* Auto dark when the user prefers it and no explicit theme is set on <html>. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0b0f17;
+    --bg-subtle: #161b24;
+    --fg: #e5e7eb;
+    --fg-muted: #9ca3af;
+    --border: #23293a;
+    --accent: #818cf8;
+    --accent-fg: #0b0f17;
+    --danger: #f87171;
+  }
+}
+
+/* Explicit dark override regardless of system preference. */
+:root[data-theme='dark'] {
+  --bg: #0b0f17;
+  --bg-subtle: #161b24;
+  --fg: #e5e7eb;
+  --fg-muted: #9ca3af;
+  --border: #23293a;
+  --accent: #818cf8;
+  --accent-fg: #0b0f17;
+  --danger: #f87171;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
+a {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------------------
+ * Rendered-markdown styles. Applied wherever {@html renderMarkdown(...)} lands
+ * inside a `.markdown` container. Lives outside Svelte's scoped CSS because the
+ * inserted DOM doesn't carry component hashes.
+ * -------------------------------------------------------------------------- */
+
+.markdown > :first-child { margin-top: 0; }
+.markdown > :last-child { margin-bottom: 0; }
+
+.markdown p { margin: 0.5em 0; }
+.markdown h1, .markdown h2, .markdown h3,
+.markdown h4, .markdown h5, .markdown h6 {
+  margin: 0.6em 0 0.3em;
+  line-height: 1.25;
+}
+.markdown h1 { font-size: 1.5rem; }
+.markdown h2 { font-size: 1.25rem; }
+.markdown h3 { font-size: 1.1rem; }
+
+.markdown ul, .markdown ol {
+  padding-left: 1.5rem;
+  margin: 0.5em 0;
+}
+.markdown li { margin: 0.15em 0; }
+.markdown li > p { margin: 0.25em 0; }
+
+.markdown a { color: var(--accent); }
+
+.markdown code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  background: var(--bg-subtle);
+  border-radius: 0.25rem;
+}
+.markdown pre {
+  font-family: var(--font-mono);
+  background: var(--bg-subtle);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 0.75em 0;
+  line-height: 1.45;
+}
+.markdown pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.9em;
+}
+
+.markdown blockquote {
+  margin: 0.75em 0;
+  padding: 0.25em 1em;
+  border-left: 3px solid var(--border);
+  color: var(--fg-muted);
+}
+
+.markdown hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 1em 0;
+}
