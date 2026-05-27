@@ -2,7 +2,7 @@
 
 A fast, fully client-side flashcard tool. No login, no server, no analytics. Cards live in your browser; export the whole library to JSON any time.
 
-- **Live:** <https://flashcards-bkowshik.pages.dev>
+- **Live:** <https://flashcards.bkowshik.in>
 - **Source:** <https://github.com/bkowshik/flashcards>
 
 ## Quick start
@@ -75,7 +75,7 @@ src/
 
 Nav is Gmail-style chord shortcuts: `g a` (Add) · `g b` (Browse) · `g q` (Quiz). Quiz: `Space` to flip, `n`/`p` (or `→`/`←`) to navigate, `e` to edit. Save in Add is `⌘/Ctrl + Enter`; `Esc` clears or cancels.
 
-Full list on the [About page](https://flashcards-bkowshik.pages.dev/#/about).
+Full list on the [About page](https://flashcards.bkowshik.in/#/about).
 
 ## Data
 
